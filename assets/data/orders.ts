@@ -1,5 +1,5 @@
 import { Order } from '../../src/types';
-import products from './products';
+import products from './Products';
 import dayjs from 'dayjs';
 
 const now = dayjs();
