@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Stack, useLocalSearchParams } from 'expo-router'
 import products from '@assets/data/Products'
 import { defaultPizzaImage } from '@/components/ProductListItem'
+import Button from "@components/Button"
 import Colors from '@/constants/Colors'
 
 const ProductDetailsScreen = () => {
@@ -20,7 +21,7 @@ const ProductDetailsScreen = () => {
       <Stack.Screen options={{ title: `Details for ${product.name}` }} />
       <Image style={styles.image} source={{ uri: product.image || defaultPizzaImage }} />
       <Text style={styles.title}>{product.name}</Text>
-      <Text style={styles.price}>${product.price}</Text>
+        <Text style={styles.price}>${product.price}</Text>
       <Text style={styles.sizeText} >Select a Size</Text>
       <View style={styles.sizes}>
         {sizes.map((size) => (
@@ -29,6 +30,7 @@ const ProductDetailsScreen = () => {
           </Pressable>
         ))}
       </View>
+      <Button style={styles.button} text={"Add To Cart"} >Hello</Button>
     </View>
   )
 }
@@ -54,6 +56,7 @@ const styles = StyleSheet.create({
     color: Colors.light.tint
   },
   price: {
+    marginVertical: 10,
     fontSize: 20,
     fontWeight: "bold"
   },
@@ -75,6 +78,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     fontSize: 20,
     fontWeight: "500",
+  },
+  button: {
+    marginVertical: 10,
   }
 })
 
