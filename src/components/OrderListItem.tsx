@@ -1,26 +1,28 @@
-import { StyleSheet, Text, Image, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import Colors from 'src/constants/Colors';
-import { Product } from '../types';
+import { Order } from '../types';
 import { Link } from 'expo-router';
 
 export const defaultPizzaImage = "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png"
 
-type ProductListItemProps = {
-    product: Product
+type OrderListItemProps = {
+    order: Order
 }
 
-const ProductListItem = ({ product }: ProductListItemProps) => {
+const OrderListItem = ({ order }: OrderListItemProps) => {
     return (
-        <Link href={`/menu/${product.id}`} asChild>
+        <Link href={`/menu/${order.id}`} asChild>
             <Pressable style={styles.container}>
-                <Image style={styles.image} source={{ uri: product.image || defaultPizzaImage }} />
-                <Text style={styles.title}>{product.name}</Text>
-                <Text style={styles.price}>${product.price}</Text>
+                <Text style={styles.title}>{order.created_at}</Text>
+                <Text style={styles.price}>${order.id}</Text>
+                <Text style={styles.price}>${order.status}</Text>
+                <Text style={styles.price}>${order.total}</Text>
+                <Text style={styles.price}>${order.user_id}</Text>
             </Pressable>
         </Link>
     )
 }
-export default ProductListItem
+export default OrderListItem
 
 const styles = StyleSheet.create({
     container: {
