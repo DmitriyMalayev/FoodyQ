@@ -1,11 +1,13 @@
-import { View, Text, Image, StyleSheet } from 'react-native'
-import React from 'react'
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
+import React, { useState } from 'react'
 import { Stack, useLocalSearchParams } from 'expo-router'
 import products from '@assets/data/Products'
 import { defaultPizzaImage } from '@/components/ProductListItem'
 import Colors from '@/constants/Colors'
 
 const ProductDetailsScreen = () => {
+  const [selectedSize, setSelectedSize] = useState("M")
+
   const { id } = useLocalSearchParams()
   const product = products.find((p) => p.id.toString() === id)
   const sizes = ["S", "M", "LG", "XL"]
@@ -19,16 +21,13 @@ const ProductDetailsScreen = () => {
       <Image style={styles.image} source={{ uri: product.image || defaultPizzaImage }} />
       <Text style={styles.title}>{product.name}</Text>
       <Text style={styles.price}>${product.price}</Text>
-
-      <Text>Select a Size</Text>
+      <Text style={styles.sizeText} >Select a Size</Text>
       <View style={styles.sizes}>
-        {sizes.map((s) => {
-          return (
-            <View style={styles.size} key={s}>
-              <Text style={styles.sizeText} > {s}</Text>
-            </View>
-          )
-        })}
+        {sizes.map((size) => (
+          <Pressable onPress={() => setSelectedSize(size)} style={[styles.size, { backgroundColor: selectedSize === size ? "red" : "lightgray" }]} key={size}>
+            <Text style={styles.sizeText}> {size}</Text>
+          </Pressable>
+        ))}
       </View>
     </View>
   )
@@ -39,7 +38,8 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 25,
     padding: 20,
-    backgroundColor: "#F9F4ED"
+    backgroundColor: "#F9F4ED",
+    alignItems: "center",
   },
   image: {
     width: "100%",
@@ -48,13 +48,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F4ED"
   },
   title: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 600,
     marginVertical: 10,
     color: Colors.light.tint
   },
   price: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold"
   },
   sizes: {
@@ -62,8 +62,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   size: {
-    marginVertical: 20,
-    backgroundColor: "grey",
+    marginVertical: 10,
+    marginHorizontal: 10,
+    backgroundColor: "#C0C0C0",
     width: 50,
     borderRadius: 25,
     aspectRatio: 1,
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   sizeText: {
+    marginVertical: 10,
     fontSize: 20,
     fontWeight: "500",
   }
